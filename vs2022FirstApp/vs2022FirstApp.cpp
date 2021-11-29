@@ -29,6 +29,7 @@ int main()
 	//std::cout << v << std::endl;
 	int number = 5;
 	char letter = 'a';
+	cout << "Hello world";
 	print(&number);
 	print(&letter);
 }
