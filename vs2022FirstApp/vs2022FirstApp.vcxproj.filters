@@ -21,7 +21,10 @@
     <ClCompile Include="printHelloWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="toolsCode.cpp">
+    <ClCompile Include="tools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="helloWorld.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
