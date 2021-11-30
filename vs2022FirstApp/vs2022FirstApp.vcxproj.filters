@@ -18,5 +18,11 @@
     <ClCompile Include="vs2022FirstApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="printHelloWorld.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="toolsCode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

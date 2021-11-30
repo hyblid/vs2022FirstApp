@@ -148,6 +148,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="printHelloWorld.cpp" />
+    <ClCompile Include="toolsCode.cpp" />
     <ClCompile Include="vs2022FirstApp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
