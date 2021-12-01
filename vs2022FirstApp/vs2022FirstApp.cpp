@@ -72,4 +72,6 @@ int main()
 		wePtr1 = shPtr1;
 	}
 	system("pause>nul");
+
+	//add comment
 }
