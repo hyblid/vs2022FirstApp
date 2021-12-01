@@ -155,12 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="fileAction.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MyLib.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="std_lib_facilities.h" />
-    <ClInclude Include="tools.h" />
     <ClInclude Include="Vctr.h" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +170,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vctr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
