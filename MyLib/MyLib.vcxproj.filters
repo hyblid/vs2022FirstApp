@@ -27,15 +27,6 @@
     <ClInclude Include="MyLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="std_lib_facilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fileAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -50,5 +41,8 @@
     <ClCompile Include="MyLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
