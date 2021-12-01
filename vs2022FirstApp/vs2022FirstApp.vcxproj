@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="console.cpp" />
     <ClCompile Include="helloWorld.ixx" />
+    <ClCompile Include="myTools.cpp" />
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="personStruct.cpp" />
     <ClCompile Include="printHelloWorld.cpp" />
