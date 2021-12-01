@@ -9,6 +9,8 @@
 #include <iomanip>
 #include <vector>
 #include <memory>
+#include "console.h"
+#include "Person.h"
 
 import helloWorld;
 using std::cin;
@@ -18,6 +20,8 @@ using std::string;
 
 void printHelloWorld();
 using namespace std;
+void printStruct(Person& p);
+void printStruct(Person* p);
 
 
 int recursive_sum(int m, int n) {
@@ -26,11 +30,6 @@ int recursive_sum(int m, int n) {
 		return m;
 	}
 	return m + recursive_sum(m + 1, n);
-}
-
-template<typename T>
-void print(T* ptr) {
-	cout << "value of ptr= " << *ptr << endl;
 }
 
 bool ascendingCompare(int a, int b) {
@@ -66,12 +65,8 @@ void printNumbers(vector<int>& numberVector) {
 
 int main()
 {
-	weak_ptr<int> wePtr1;
-	{
-		shared_ptr<int>shPtr1 = make_shared<int>(25);
-		wePtr1 = shPtr1;
-	}
-	system("pause>nul");
-
-	//add comment
+	//practise here
+	Person p("howard", 20);
+	p.printStruct(&p);
+	system("pause >0");
 }
