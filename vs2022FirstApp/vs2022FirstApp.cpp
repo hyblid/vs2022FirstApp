@@ -141,13 +141,6 @@ int main()
 		// get password
 		cout << "Enter password: ";
 		getline(cin, password);
-		// set valid flag
-		valid_password = true;
-
-		// get password
-		cout << "Enter password: ";
-		getline(cin, password);
-
 		valid_password = is_valid_password(password);
 	}
 	cout << endl;
@@ -156,10 +149,8 @@ int main()
 	string email;
 	bool valid_email = false;
 	while (!valid_email) {
-		// get email
 		cout << "Enter email: ";
 		getline(cin, email);
-
 		valid_email = is_valid_email(email);
 	}
 	cout << endl;
