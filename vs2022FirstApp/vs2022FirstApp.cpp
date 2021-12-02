@@ -168,6 +168,7 @@ int main()
 	// display welcome message
 	cout << "Hi " << first_name << ",\n"
 		<< "Thanks for creating an account!\n\n";
+	cout << endl;
 }
 
 
