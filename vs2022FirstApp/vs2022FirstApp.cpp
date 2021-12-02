@@ -117,14 +117,16 @@ int main()
 		getline(cin, full_name);
 
 		// strip whitespace from front
-		int i = full_name.find_first_not_of(" \n\t");
-		if (i > -1) {
+		//warning C4267 : '=' : conversion from 'size_t' to 'int', possible loss of data
+		size_t i = full_name.find_first_not_of(" \n\t");
+		if (i != std::string::npos) {
 			full_name = full_name.substr(i);
 		}
 
 		// get first name
-		int space_index = full_name.find(' ');
-		if (space_index == -1) {
+		size_t space_index = full_name.find(' ');
+		//warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+		if (space_index == std::string::npos) {
 			cout << "You must enter your full name. Please try again.\n";
 		}
 		else {
