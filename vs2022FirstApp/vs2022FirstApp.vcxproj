@@ -154,12 +154,14 @@
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="personStruct.cpp" />
     <ClCompile Include="printHelloWorld.cpp" />
+    <ClCompile Include="validation.cpp" />
     <ClCompile Include="vs2022FirstApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="console.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="std_lib_facilities.h" />
+    <ClInclude Include="validation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
