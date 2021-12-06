@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Account.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="helloWorld.ixx" />
     <ClCompile Include="myTools.cpp" />
