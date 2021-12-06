@@ -13,6 +13,7 @@
 #include "Person.h"
 #include "validation.h"
 #include <list>
+#include "Account.cpp"
 
 import helloWorld;
 using std::cin;
@@ -104,71 +105,105 @@ ostream& operator<<(ostream& COUT, MyCollection& collection) {
 	return COUT;
 }
 
-int main()
-{
-	cout << "Create Account\n\n";
+struct Movie {
+	string name;
+};
 
-	// get full name and parse first name
-	string full_name;
-	string first_name;
-	bool valid_name = false;
-	while (!valid_name) {
-		cout << "Enter full name: ";
-		getline(cin, full_name);
+void printCollection(const Movie& moive) {
+	cout << moive.name << endl;
+}
 
-		// strip whitespace from front
-		//warning C4267 : '=' : conversion from 'size_t' to 'int', possible loss of data
-		size_t i = full_name.find_first_not_of(" \n\t");
-		if (i != std::string::npos) {
-			full_name = full_name.substr(i);
-		}
+/// when pass array as function argument,
+/// it points only first element of array
+/// like A[0]
+const string accounts_file = "accounts.txt";
 
-		// get first name
-		size_t space_index = full_name.find(' ');
-		//warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
-		if (space_index == std::string::npos) {
-			cout << "You must enter your full name. Please try again.\n";
-		}
-		else {
-			first_name = full_name.substr(0, space_index);
-			valid_name = true;
-		}
+void display_accounts(const vector<Account>& accounts) {
+	int col_width = 10;
+	cout << left
+		<< setw(col_width * 3) << "Name"
+		<< setw(col_width * 4) << "Email" << endl;
+
+	for (Account account : accounts) {
+		cout << setw(col_width * 3) << account.first_name + ' ' + account.last_name
+			<< setw(col_width * 4) << account.email << endl;
 	}
-	cout << endl;
-
-	// get the password
-	string password;
-	bool valid_password = false;
-	while (!valid_password) {
-		// get password
-		cout << "Enter password: ";
-		getline(cin, password);
-		valid_password = is_valid_password(password);
-	}
-	cout << endl;
-
-	// get the email address
-	string email;
-	bool valid_email = false;
-	while (!valid_email) {
-		cout << "Enter email: ";
-		getline(cin, email);
-		valid_email = is_valid_email(email);
-	}
-	cout << endl;
-
-	// make sure first name uses initial cap
-	char letter = first_name[0];
-	first_name[0] = toupper(letter);
-	for (int i = 1; i < first_name.length(); ++i) {
-		letter = first_name[i];
-		first_name[i] = tolower(letter);
-	}
-
-	// display welcome message
-	cout << "Hi " << first_name << ",\n"
-		<< "Thanks for creating an account!\n\n";
 	cout << endl;
 }
 
+void write_accounts_to_file(const vector<Account>& account) {
+	ofstream output_file("accounts.txt", ios::app);
+	for (Account ac : account)
+	{
+		output_file << ac.first_name << '\t'
+			<< ac.last_name << '\t'
+			<< ac.password << '\t'
+			<< ac.email << '\n';
+	}
+}
 
+std::vector<Account> read_accounts_from_file() {
+	vector<Account> accounts;
+
+	ifstream input_file(accounts_file);
+	if (input_file) {
+		Account account;
+		while (input_file >> account.first_name >> account.last_name >> account.password >> account.email) {
+			accounts.push_back(account);
+		}
+		input_file.close();
+	}
+	return accounts;
+}
+
+Account get_account() {
+	Account account;
+	cout << "First name: ";
+	getline(cin, account.first_name);
+	cout << "Last name: ";
+	getline(cin, account.last_name);
+	cout << "Password: ";
+	getline(cin, account.password);
+	cout << "Email: ";
+	getline(cin, account.email);
+	return account;
+}
+
+int main()
+{
+	cout << "Create Account List\n\n";
+	vector<Account> accounts = read_accounts_from_file();
+	display_accounts(accounts);
+
+	char another = 'y';
+	while (tolower(another) == 'y') {
+		Account account = get_account();
+
+		// check if account already exists
+		bool already_exists = false;
+		for (Account& a : accounts) {
+			if (a == account) {
+				already_exists = true;
+				break;
+			}
+		}
+
+		if (already_exists) {
+			cout << account.email << " already exists - account not added.\n\n";
+		}
+		else {
+			accounts.push_back(account);
+			write_accounts_to_file(accounts);
+			cout << endl << account.email << " was added for "
+				<< account.first_name + ' ' + account.last_name + '.' << endl << endl;
+		}
+
+		cout << "Enter another account? (y/n): ";
+		cin >> another;
+		cin.ignore();
+		cout << endl;
+	}
+
+	// display the Account objects in the vector
+	display_accounts(accounts);
+}
