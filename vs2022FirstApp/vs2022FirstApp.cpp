@@ -119,40 +119,32 @@ void printCollection(const Movie& moive) {
 const string accounts_file = "accounts.txt";
 
 void display_accounts(const vector<Account>& accounts) {
-	int col_width = 10;
-	cout << left
-		<< setw(col_width * 3) << "Name"
-		<< setw(col_width * 4) << "Email" << endl;
-
+	cout << left << setw(30) << "Name" << left<< setw(40) << "Email" << endl;
 	for (Account account : accounts) {
-		cout << setw(col_width * 3) << account.first_name + ' ' + account.last_name
-			<< setw(col_width * 4) << account.email << endl;
+		cout << left << setw(30) << account.first_name + ' ' + account.last_name << left << setw(40) << account.email << endl;
 	}
-	cout << endl;
+
 }
 
-void write_accounts_to_file(const vector<Account>& account) {
-	ofstream output_file("accounts.txt", ios::app);
-	for (Account ac : account)
-	{
-		output_file << ac.first_name << '\t'
-			<< ac.last_name << '\t'
-			<< ac.password << '\t'
-			<< ac.email << '\n';
+void write_accounts_to_file(const vector<Account>& accounts) {
+	ofstream output_file(accounts_file);
+	for (Account account : accounts) {
+		output_file << account.first_name << '\t' << account.last_name << '\t' << account.password << '\t' << account.email << endl;
 	}
+	output_file.close();
 }
 
-std::vector<Account> read_accounts_from_file() {
+vector<Account> read_accounts_from_file() {
 	vector<Account> accounts;
-
+	Account account;
 	ifstream input_file(accounts_file);
 	if (input_file) {
-		Account account;
-		while (input_file >> account.first_name >> account.last_name >> account.password >> account.email) {
-			accounts.push_back(account);
+	while (input_file >> account.first_name >> account.last_name >> account.password >> account.email) {
+		accounts.push_back(account);
 		}
 		input_file.close();
 	}
+	cout << endl;
 	return accounts;
 }
 
@@ -171,39 +163,33 @@ Account get_account() {
 
 int main()
 {
-	cout << "Create Account List\n\n";
 	vector<Account> accounts = read_accounts_from_file();
 	display_accounts(accounts);
-
+	bool isExist = false;
 	char another = 'y';
 	while (tolower(another) == 'y') {
 		Account account = get_account();
-
-		// check if account already exists
-		bool already_exists = false;
-		for (Account& a : accounts) {
-			if (a == account) {
-				already_exists = true;
+		for (Account ac : accounts) {
+			if (account.email == ac.email) {
+				isExist = true;
 				break;
-			}
+			} 
 		}
-
-		if (already_exists) {
-			cout << account.email << " already exists - account not added.\n\n";
+    
+		if (isExist) {
+			cout << account.email << " alreay exists - account not added" << endl;
 		}
 		else {
 			accounts.push_back(account);
-			write_accounts_to_file(accounts);
-			cout << endl << account.email << " was added for "
-				<< account.first_name + ' ' + account.last_name + '.' << endl << endl;
+			cout << account.email << " was added for " << account.first_name << ' ' << account.last_name << endl;
+	        write_accounts_to_file(accounts);
 		}
+
 
 		cout << "Enter another account? (y/n): ";
 		cin >> another;
 		cin.ignore();
 		cout << endl;
 	}
-
-	// display the Account objects in the vector
 	display_accounts(accounts);
 }
