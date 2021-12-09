@@ -13,7 +13,7 @@
 #include "Person.h"
 #include "validation.h"
 #include <list>
-#include "Account.cpp"
+#include "Sample.cpp"
 
 import helloWorld;
 using std::cin;
@@ -116,80 +116,38 @@ void printCollection(const Movie& moive) {
 /// when pass array as function argument,
 /// it points only first element of array
 /// like A[0]
-const string accounts_file = "accounts.txt";
+/// 
 
-void display_accounts(const vector<Account>& accounts) {
-	cout << left << setw(30) << "Name" << left<< setw(40) << "Email" << endl;
-	for (Account account : accounts) {
-		cout << left << setw(30) << account.first_name + ' ' + account.last_name << left << setw(40) << account.email << endl;
-	}
-
-}
-
-void write_accounts_to_file(const vector<Account>& accounts) {
-	ofstream output_file(accounts_file);
-	for (Account account : accounts) {
-		output_file << account.first_name << '\t' << account.last_name << '\t' << account.password << '\t' << account.email << endl;
-	}
-	output_file.close();
-}
-
-vector<Account> read_accounts_from_file() {
-	vector<Account> accounts;
-	Account account;
-	ifstream input_file(accounts_file);
-	if (input_file) {
-	while (input_file >> account.first_name >> account.last_name >> account.password >> account.email) {
-		accounts.push_back(account);
-		}
-		input_file.close();
-	}
-	cout << endl;
-	return accounts;
-}
-
-Account get_account() {
-	Account account;
-	cout << "First name: ";
-	getline(cin, account.first_name);
-	cout << "Last name: ";
-	getline(cin, account.last_name);
-	cout << "Password: ";
-	getline(cin, account.password);
-	cout << "Email: ";
-	getline(cin, account.email);
-	return account;
+ostream& operator<<(ostream& COUT, Sample& sample) {
+	cout << "sample class's two value : " << sample.getIntA() << ' ' << sample.getIntB() << endl;
+	return COUT;
 }
 
 int main()
 {
-	vector<Account> accounts = read_accounts_from_file();
-	display_accounts(accounts);
-	bool isExist = false;
-	char another = 'y';
-	while (tolower(another) == 'y') {
-		Account account = get_account();
-		for (Account ac : accounts) {
-			if (account.email == ac.email) {
-				isExist = true;
-				break;
-			} 
-		}
-    
-		if (isExist) {
-			cout << account.email << " alreay exists - account not added" << endl;
-		}
-		else {
-			accounts.push_back(account);
-			cout << account.email << " was added for " << account.first_name << ' ' << account.last_name << endl;
-	        write_accounts_to_file(accounts);
-		}
+	int sales[3][4] = { {10,22,43,22}, 
+		                {33,11,43,55},
+		                {54,56,76,59} };
+	//int* ip = (int*)sales[0];
+	int* ip = (int*)sales;
+	int** ipp; //wrong
 
+	cout << "Storage of data:" << endl;
+	for (int i = 0; i < 12; i++) {
+		cout << ip[i] << " ";
+	}
 
-		cout << "Enter another account? (y/n): ";
-		cin >> another;
-		cin.ignore();
+	int(*ip4)[4] = sales; //ip4 points to array of ints
+	//ip4 = &sales[0]; //address of first sales
+	//ip4 = sales;
+	cout << endl << endl;
+	cout << "Matrix concept1:" << endl;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 4; j++) {
+			cout << *(*(ip4 + i) + j) << " ";
+		}
 		cout << endl;
 	}
-	display_accounts(accounts);
 }
+
