@@ -155,6 +155,7 @@
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="personStruct.cpp" />
     <ClCompile Include="printHelloWorld.cpp" />
+    <ClCompile Include="Sample.cpp" />
     <ClCompile Include="validation.cpp" />
     <ClCompile Include="vs2022FirstApp.cpp" />
   </ItemGroup>
