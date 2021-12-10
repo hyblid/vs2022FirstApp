@@ -15,6 +15,7 @@
 #include <list>
 #include "Sample.cpp"
 #include <map>
+#include <set>
 
 import helloWorld;
 using std::cin;
@@ -116,56 +117,77 @@ ostream& operator<<(ostream& COUT, Sample& sample) {
 	return COUT;
 }
 
-char get_choice() {
-	char choice;
-	cout << "Continue (y/n)?: ";
-	cin >> choice;
+/// <<<<<<<<<------------------------------->>>>>>>>>
+/// Put code below
+/// For exercise C++
+/// <<<<<<<<<------------------------------->>>>>>>>>
+multiset<string> display_and_load_words(string filename);
+//map<string, int> get_word_count(const vector<string>& words);
+set<string> get_unique_words(multiset<string>& words);
+
+int main() {
+	cout << "The Word Counter program\n\n";
+
+	string filename = "dickens.txt";
+	auto words = display_and_load_words(filename);
+	cout << "\nTotal WORDS: " << words.size() << endl;
+	//for (string word : words) {
+	//	cout << word << ' ';
+	//}
+	//cout << endl << endl;
+
+	auto unique_count = get_unique_words(words);
+	cout << "Unique " << unique_count.size() << " WORDS\n";
+
+
+	for (string unique : unique_count) {
+		cout << unique << ' ';
+	}
+}
+
+multiset<string> display_and_load_words(string filename) {
+	multiset<string> words;
+	ifstream infile(filename);
+
+	if (infile) {
+		string word;
+		while (infile >> word) {
+
+			string new_word = "";
+			for (char c : word) {
+				if (c == '.' || c == ',') {
+					continue;               // remove punctuation
+				}
+				else if (isupper(c)) {
+					new_word += tolower(c); // convert to lowercase
+				}
+				else {
+					new_word += c;
+				}
+			}
+			cout << new_word << ' ';
+			words.insert(new_word);      // add word 
+		}
+		infile.close();
+	}
+
 	cout << endl;
-	return choice;
+	auto itr = words.begin();
+	for (itr = words.begin(); itr != words.end(); itr++)
+	{
+		cout << (*itr);
+	}
+	return words;
 }
 
-void display_codes(const map<string, string>& countries) {
-	cout << "Country codes: ";
-	for (auto country : countries) {
-		cout << country.first << " ";
-	}
-	cout << endl << endl;
-}
+set<string> get_unique_words(multiset<string>& words) {
+	set<string> unique_words;
 
-void display_country(const map<string, string>& countries) {
-	string code;
-	cout << "Enter a country code: ";
-	cin >> code;
-	string upper_code = "";
-	for (char c : code) {
-		upper_code += toupper(c);
+	for (string word : words) {
+		auto search = unique_words.find(word);
+		if (search == unique_words.end()) {
+			unique_words.insert(word);
+		}
 	}
-
-	// get iterator for map element with code
-	auto itr = countries.find(code);
-	// if the code isn't found, display a message
-	// if the code is found, display the country name
-	if (itr == countries.end()) {
-		cout << "Country code not found" << endl;
-	}
-	else {
-		cout << "You selected " << itr->second << endl << endl;
-	}
-}
-
-int main()
-{
-	map<string, string> countries{ {"CA", "Canada"}, {"US", "United States"}, {"MX", "Mexico"} };
-
-	cout << "The Country Codes Program\n\n";
-	char choice = 'y';
-	display_codes(countries);
-	while (choice == 'y') {
-		display_country(countries);
-		cout << "Continue (y/n)?: ";
-		cin >> choice;
-		cin.ignore(1000, '\n');
-	}
-	cout << "Bye!" << endl;
-	// while the user indicates they want to continue, display a country
+	return unique_words;
 }
