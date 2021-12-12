@@ -72,6 +72,7 @@ public:
 			_sz = len;
 			while ((*sptr++ = *instr++) != '\0');
 		}
+		return *this;
 	}
 
 	void pad(char pad_char, int pad_len) {
@@ -86,17 +87,18 @@ public:
 
 	int slen() {
 		int i;
-		for (i = 0; *(_storage); i++) {
-			return (i);
-		}
+		for (i = 0; *(_storage + i); i++);
+		return (i);
 	}
 
 	int search(char* word) {
-		int idx, i, j;
+		int idx = 0;
+		int i= 0;
+		int j = 0;
 		char* searchstr = _storage;
 		for (i = 0; searchstr[i]; i++)
 		{
-			if (searchstr[0] == word[j])
+			if (searchstr[i] == word[j])
 			{
 				if (!j) idx = i;
 				j++;

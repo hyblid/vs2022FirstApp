@@ -16,6 +16,7 @@
 #include "Sample.cpp"
 #include <map>
 #include <set>
+#include "String.cpp"
 
 import helloWorld;
 using std::cin;
@@ -126,23 +127,34 @@ multiset<string> display_and_load_words(string filename);
 set<string> get_unique_words(multiset<string>& words);
 
 int main() {
-	cout << "The Word Counter program\n\n";
+	String name;
+	String padded_name;
+	String quote;
+	String reverse_name;
 
-	string filename = "dickens.txt";
-	auto words = display_and_load_words(filename);
-	cout << "\nTotal WORDS: " << words.size() << endl;
-	//for (string word : words) {
-	//	cout << word << ' ';
-	//}
-	//cout << endl << endl;
+	int index;
 
-	auto unique_count = get_unique_words(words);
-	cout << "Unique " << unique_count.size() << " WORDS\n";
+	name = (char*)"Michael Dacota";
+	quote = (char*)"The C language has brought forth a new era in computing";
 
+	cout << "Name is " << name << endl;
+	padded_name.pad('*', 30);
+	cout << "Padded Name is " << padded_name << endl;
 
-	for (string unique : unique_count) {
-		cout << unique << ' ';
+	cout << "the length of:" << endl;
+	cout << "<" << quote << ">" << " is " << quote.slen() << endl;
+	index = quote.search((char*)"forth");
+
+	if (index != -1) {
+		cout << "The index of \"forth\" in " << endl << quote;
+		cout << " is " << index << endl;
 	}
+	else {
+		cout << "forth is not in " << endl << quote << endl;
+	}
+	reverse_name = name.reverse();
+	cout << "My name is " << name << endl;
+	cout << "My reverse name is " << reverse_name << endl;
 }
 
 multiset<string> display_and_load_words(string filename) {
