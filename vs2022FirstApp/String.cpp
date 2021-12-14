@@ -4,7 +4,7 @@
 const int MAX = 255;
 class String {
 protected:
-	char _storage[MAX + 1];
+	char _storage[MAX + 1] = "";
 	int _sz;
 
 public:
@@ -13,8 +13,9 @@ public:
 	}
 
 	String(char* instr) {
+		std::cout << "call constructor!" << std::endl;
 	 	if (instr) {
-			_sz = strlen(instr);
+			_sz = static_cast<unsigned int>(strlen(instr));
 			assert(_sz < MAX);
 			strcpy(_storage ,instr);
 		}
@@ -23,7 +24,10 @@ public:
 		}
 	}
 
-	~String() { _sz = 0; }
+	~String() { 
+		std::cout << "call destructor!" << std::endl;
+		_sz = 0; 
+	}
 	
 	char& operator[] (int index) {
 		assert(index < _sz);
@@ -45,7 +49,7 @@ public:
 		char* sptr = _storage;
 		if (instr)
 		{
-			len = strlen(instr);
+			len = static_cast<unsigned int>(strlen(instr));
 			assert(len < MAX);
 			_sz = len;
 		    while ((*sptr++ = *instr++) != '\0');
@@ -67,7 +71,7 @@ public:
 		char* sptr = _storage;
 		if (instr)
 		{
-			len = strlen(instr);
+			len = static_cast<unsigned int>(strlen(instr));
 			assert(len < MAX);
 			_sz = len;
 			while ((*sptr++ = *instr++) != '\0');
@@ -82,13 +86,14 @@ public:
 		{
 			_storage[i] = pad_char;
 		}
+		    //add null at end of string
 			_storage[pad_len] = '\0';
 	}
 
 	int slen() {
 		int i;
 		for (i = 0; *(_storage + i); i++);
-		return (i);
+		return i;
 	}
 
 	int search(char* word) {
@@ -114,10 +119,10 @@ public:
 		}
 
 		if (word[j] != '\0') {
-			return (-1);
+			return -1;
 		}
 		else {
-			return (idx);
+			return idx;
 		}
 	}
 
