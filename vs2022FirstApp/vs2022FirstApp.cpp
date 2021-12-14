@@ -16,7 +16,9 @@
 #include "Sample.cpp"
 #include <map>
 #include <set>
-#include "String.cpp"
+#include <algorithm>
+#include <numeric>
+#include <cmath>
 
 import helloWorld;
 using std::cin;
@@ -122,84 +124,36 @@ ostream& operator<<(ostream& COUT, Sample& sample) {
 /// Put code below
 /// For exercise C++
 /// <<<<<<<<<------------------------------->>>>>>>>>
-multiset<string> display_and_load_words(string filename);
-//map<string, int> get_word_count(const vector<string>& words);
-set<string> get_unique_words(multiset<string>& words);
 
-int main() {
-	String name;
-	String padded_name;
-	String quote;
-	String reverse_name;
-
-	int index;
-
-	name = (char*)"Michael Dacota";
-	quote = (char*)"The C language has brought forth a new era in computing";
-
-	cout << "Name is " << name << endl;
-	padded_name.pad('*', 30);
-	cout << "Padded Name is " << padded_name << endl;
-
-	cout << "the length of:" << endl;
-	cout << "<" << quote << ">" << " is " << quote.slen() << endl;
-	index = quote.search((char*)"forth");
-
-	if (index != -1) {
-		cout << "The index of \"forth\" in " << endl << quote;
-		cout << " is " << index << endl;
-	}
-	else {
-		cout << "forth is not in " << endl << quote << endl;
-	}
-	reverse_name = name.reverse();
-	cout << "My name is " << name << endl;
-	cout << "My reverse name is " << reverse_name << endl;
+int sort_descending(int i, int j) {
+	return i > j;
 }
 
-multiset<string> display_and_load_words(string filename) {
-	multiset<string> words;
-	ifstream infile(filename);
+void display(int value) {
+	cout << value << ' ';
+}
 
-	if (infile) {
-		string word;
-		while (infile >> word) {
+struct MINScore {
+	int minimum;
 
-			string new_word = "";
-			for (char c : word) {
-				if (c == '.' || c == ',') {
-					continue;               // remove punctuation
-				}
-				else if (isupper(c)) {
-					new_word += tolower(c); // convert to lowercase
-				}
-				else {
-					new_word += c;
-				}
-			}
-			cout << new_word << ' ';
-			words.insert(new_word);      // add word 
-		}
-		infile.close();
+	MINScore(int number) {
+		minimum = number;
 	}
 
-	cout << endl;
-	auto itr = words.begin();
-	for (itr = words.begin(); itr != words.end(); itr++)
+	bool operator() (int number) const {
+		return number >= minimum;
+	}
+};
+
+
+
+int main()
+{
+	char arr[5] = { 'h', 'e', 'l', 'l', 'o' };
+	for (int i = 0; i < 5; i++)
 	{
-		cout << (*itr);
+		cout << arr[i] << endl;
 	}
-	return words;
-}
 
-set<string> get_unique_words(multiset<string>& words) {
-	set<string> unique_words;
 
-	for (string word : words) {
-		auto search = unique_words.find(word);
-		if (search == unique_words.end()) {
-			unique_words.insert(word);
-		}
-	}
-	return unique_words;
 }
