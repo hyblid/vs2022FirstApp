@@ -144,9 +144,7 @@ struct MINScore {
 	}
 };
 
-int calculate_total(int scores[], int score_count);
-const int maxStudent = 10;
-const int perStudent = 3;
+double calculate_total(int scores[], int score_count);
 
 void display_scores(int scores[], int score_count) {
 	for (int i = 0; i < score_count; ++i) {
@@ -155,25 +153,31 @@ void display_scores(int scores[], int score_count) {
 }
 
 int main() {
-	
-	int scores[maxStudent][perStudent]{ 0 };
+	const int cols = 3;
+	const int rows = 20;
+	int scores[rows][cols]{ 0 };  // set each element in array to 0
 
 	cout << "The Test Scores program\n\n";
 
-	cout << "Enter test scores (" << perStudent << " per student, " << maxStudent << " max student.\n)"
+	cout << "Enter test scores (" << cols << " per student, " << rows << " max students.)\n"
 		<< "Make sure each score is between 0 and 100.\n"
 		<< "To end the program, enter -1.\n\n";
 
-	// initialize counter and score variables
-	int score_count = 0, score = 0, numberOfStudent = 0;
+	// initialize student counter, score counter, and score variables
+	int student_count = 0, score_count = 0, score = 0;
 
 	// prevent out of bounds access by making sure
-	// score count is less than capacity
-	while (score != -1 && numberOfStudent < maxStudent) {
-		cout << "Student: " << numberOfStudent + 1 << endl;
-		cout << "Enter score: ";
-		cin >> score;
-		while (score != -1 && score_count < perStudent - 1) {
+	// student count is less than the number of rows
+	while (score != -1 && student_count < rows) {
+		cout << "Student " << (student_count + 1) << endl;
+		score_count = 0;
+		score = 0;
+		// prevent out of bounds access by making sure
+		// score count is less than the number of columns
+		while (score != -1 && score_count < cols) {
+			cout << "Enter score: ";
+			cin >> score;
+
 			if (cin.fail()) {
 				cin.clear();             // clear bad input flag
 				cin.ignore(1000, '\n');  // discard input up to end of line
@@ -185,34 +189,27 @@ int main() {
 			else if (score < -1) {
 				cout << "Score can't be a negative number. Try again.\n";
 			}
-			else if (score == -1) {
-				cout << "Application is terminated.\n";
-				break;
-			}
 			else if (score > -1) {
-				scores[numberOfStudent][score_count] = score;   // store score in array
+				scores[student_count][score_count] = score;   // store score in array
 				++score_count;                 // increment score count
 			}
-			cout << "Enter score: ";
-			cin >> score;
-		}//nest loop
-		++numberOfStudent;
-		score_count = 0;
+		}
+		++student_count;
+		cout << endl;
 	}
-	cout << endl;
 
-	if (numberOfStudent == 0) {
+	if (student_count == 0) {
 		cout << "No scores entered.\n\n";
 	}
 	else {
 		// calculate and display total and average scores
 		int row = 0;
-		while (row < perStudent - 1) {
+		while (row < student_count - 1) {
 			cout << "Student " << (row + 1) << ": ";
-			display_scores(scores[row], 3);
+			display_scores(scores[row], cols);
 
-			double total = calculate_total(scores[row], 3);
-			double average = total / 3;
+			double total = calculate_total(scores[row], cols);
+			double average = total / cols;
 			average = round(average * 10) / 10;
 			cout << "\tAvg score: " << average << endl;
 			++row;
@@ -222,10 +219,10 @@ int main() {
 	return 0;
 }
 
-int calculate_total(int scores[], int score_count) {
-	int total = 0.0;
+double calculate_total(int scores[], int score_count) {
+	double total = 0.0;
 	for (int i = 0; i < score_count; ++i) {
-		  total += scores[i];
+		total += scores[i];
 	}
 	return total;
 }
