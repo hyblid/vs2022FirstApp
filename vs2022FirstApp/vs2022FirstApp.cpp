@@ -13,8 +13,7 @@
 #include "Person.h"
 #include "validation.h"
 #include <list>
-#include "Dice.h"
-#include "Die.h"
+#include "Temp.h"
 #include "Sample.cpp"
 #include <map>
 #include <set>
@@ -170,41 +169,63 @@ struct Entry {
 	}
 };
 
+void display_menu();
+void convert_temp();
+double to_celsius(double fahrenheit);
+double to_fahrenheit(double celsius);
+
 int main() {
-	cout << "The Dice Roller program\n";
 
-	for (int i = 6; i > 0; --i) {
-		Die die;
-		die.set_value(i);
-		cout << die.get_image();
-	}
-	cout << endl;
+	cout << "Convert Temperatures\n\n";
 
-	// get number of dice from user
-	int count;
-	cout << "Enter the number of dice to roll: ";
-	cin >> count;
+	display_menu();
+	char again = 'y';
+	while (again == 'y') {
+		convert_temp();
 
-	// create Dice object and add Die objects to it
-	Dice dice;
-	for (int i = 0; i < count; ++i) {
-		Die die;
-		dice.add_die(die);
-	}
-
-	char choice = 'y';
-	while (choice == 'y') {
-		// roll the dice
-		dice.roll_all();
-		cout << "YOUR ROLL:\n";
-		for (Die die : dice.get_dice()) {
-			cout << die.get_image();
-		}
+		cout << "Convert another temperature? (y/n): ";
+		cin >> again;
 		cout << endl;
-		cout << "TOTAL: " << dice.get_total() << endl << endl;
-
-		cout << "Roll again? (y/n): ";
-		cin >> choice;
 	}
-	cout << "Bye!\n\n";
+	cout << "Bye!\n";
 }
+
+/****************************************************
+* Define functions
+*****************************************************/
+
+void display_menu() {
+	cout << "MENU\n"
+		<< "1. Fahrenheit to Celsius\n"
+		<< "2. Celsius to Fahrenheit\n\n";
+}
+
+void convert_temp() {
+	Temp temp;
+	int option;
+	cout << "Enter a menu option: ";
+	cin >> option;
+
+	double f = 0.0;
+	double c = 0.0;
+	switch (option) {
+	case 1:
+		cout << "Enter degrees Fahrenheit: ";
+		cin >> f;
+		temp.setFahrenheit(f);
+		c = temp.getCelsius();
+		cout << "Degrees Celsius: " << c << endl;
+		break;
+	case 2:
+		cout << "Enter degrees Celsius: ";
+		cin >> c;
+		temp.setCelsius(c);
+		f = temp.getFahrenheit();
+		cout << "Degrees Fahrenheit: " << f << endl;
+		break;
+	default:
+		cout << "You must enter a valid menu number.\n";
+		break;
+	}
+}
+
