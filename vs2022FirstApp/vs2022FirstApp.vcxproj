@@ -171,6 +171,7 @@
     <ClCompile Include="vs2022FirstApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Die.h" />

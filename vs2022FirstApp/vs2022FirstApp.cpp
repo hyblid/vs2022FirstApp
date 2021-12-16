@@ -13,7 +13,7 @@
 #include "Person.h"
 #include "validation.h"
 #include <list>
-#include "Temp.h"
+#include "Circle.h"
 #include "Sample.cpp"
 #include <map>
 #include <set>
@@ -169,63 +169,19 @@ struct Entry {
 	}
 };
 
-void display_menu();
-void convert_temp();
-double to_celsius(double fahrenheit);
-double to_fahrenheit(double celsius);
-
-int main() {
-
-	cout << "Convert Temperatures\n\n";
-
-	display_menu();
-	char again = 'y';
-	while (again == 'y') {
-		convert_temp();
-
-		cout << "Convert another temperature? (y/n): ";
-		cin >> again;
-		cout << endl;
-	}
-	cout << "Bye!\n";
+int main()
+{
+	// print name of program
+	cout << "Circle Calculator" << endl << endl;
+	Circle circle;
+	// get radius from user
+	double radius;
+	cout << "Enter radius:  ";
+	cin >> radius;
+	circle.set_radius(radius);
+	cout << "Diameter:      " << circle.getDiameter() << endl
+		<< "Circumference: " << circle.getCircumference() << endl
+		<< "Area:          " << circle.getArea() << endl << endl
+		<< "Bye!" << endl << endl;
+	return 0;
 }
-
-/****************************************************
-* Define functions
-*****************************************************/
-
-void display_menu() {
-	cout << "MENU\n"
-		<< "1. Fahrenheit to Celsius\n"
-		<< "2. Celsius to Fahrenheit\n\n";
-}
-
-void convert_temp() {
-	Temp temp;
-	int option;
-	cout << "Enter a menu option: ";
-	cin >> option;
-
-	double f = 0.0;
-	double c = 0.0;
-	switch (option) {
-	case 1:
-		cout << "Enter degrees Fahrenheit: ";
-		cin >> f;
-		temp.setFahrenheit(f);
-		c = temp.getCelsius();
-		cout << "Degrees Celsius: " << c << endl;
-		break;
-	case 2:
-		cout << "Enter degrees Celsius: ";
-		cin >> c;
-		temp.setCelsius(c);
-		f = temp.getFahrenheit();
-		cout << "Degrees Fahrenheit: " << f << endl;
-		break;
-	default:
-		cout << "You must enter a valid menu number.\n";
-		break;
-	}
-}
-
