@@ -23,7 +23,12 @@
 #include <stddef.h>
 #include <string.h>
 #include <ctype.h>
-#include <stdlib.h>
+#include <assert.h>
+#include <cstdarg>
+#include "Product.h"
+#include "Book.h"
+#include "Movie.h"
+
 
 import helloWorld;
 using std::cin;
@@ -169,19 +174,100 @@ struct Entry {
 	}
 };
 
-int main()
+void exhausted()
 {
-	// print name of program
-	cout << "Circle Calculator" << endl << endl;
-	Circle circle;
-	// get radius from user
-	double radius;
-	cout << "Enter radius:  ";
-	cin >> radius;
-	circle.set_radius(radius);
-	cout << "Diameter:      " << circle.getDiameter() << endl
-		<< "Circumference: " << circle.getCircumference() << endl
-		<< "Area:          " << circle.getArea() << endl << endl
-		<< "Bye!" << endl << endl;
-	return 0;
+	cout << "The free store is exhausted." << endl;
+	exit(0);
+}
+
+class intarray {
+protected:
+	int* _storage;
+	int _len;
+public:
+	intarray();
+	intarray(int num);
+	intarray(short num, ...);
+	~intarray();
+	int& operator [](int index);
+};
+
+intarray::intarray()
+{
+	_storage = 0;
+	_len = 0;
+}
+
+intarray::intarray(int num)
+{
+	int i;
+
+	cout << "Calling the intarray constructor." << endl;
+	_storage = new int[num];
+	for (i = 0; i < num; i++)
+		_storage[i] = 0;
+	_len = num;
+}
+
+intarray::intarray(short num, ...)
+{
+	int i;
+	va_list ap;
+
+	cout << "Calling the intarray constructor." << endl;
+	_storage = new int[num];
+	va_start(ap, num);
+	for (i = 0; i < num; i++)
+		_storage[i] = va_arg(ap, int);
+	_len = num;
+	va_end(ap);
+}
+
+intarray::~intarray()
+{
+	cout << "Calling the intarray destructor." << endl;
+	delete _storage;
+	_len = 0;
+}
+
+int& intarray::operator [](int index)
+{
+	assert(index < _len);
+	return _storage[index];
+}
+
+long calculate(int cnt)
+{
+	int i = 0;
+	intarray scratch(cnt);
+	long sum = 0, average = 0;
+
+	for (i = 0; i < cnt; i++)
+	{
+		cout << "Enter number: ";
+		cin >> scratch[i];
+	}
+
+	for (i = 0; i < cnt; i++)
+	{
+		sum += scratch[i];
+	}
+
+	average = sum / cnt;
+	return sum;
+}
+
+void show_product(const Product& p) {
+	cout << "Description :   " << p.get_description() << endl;
+	cout << "Discount Price  " << p.get_discount_price() << endl;
+}
+
+void main()
+{
+	Product product("Stanley 13 Ounce Wood Hammer", 12.99, 62);
+	Book book("The Big Short", 15.95, 34, "Michael Lewis");
+	Movie movie("The Wizard of Oz", 14.99, 50, 1939);
+	show_product(product);
+	show_product(book);
+	show_product(movie);
 }
