@@ -162,6 +162,7 @@
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="personStruct.cpp" />
     <ClCompile Include="printHelloWorld.cpp" />
+    <ClCompile Include="Product.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="sort.cpp" />
     <ClCompile Include="String.cpp" />
@@ -171,12 +172,15 @@
     <ClCompile Include="vs2022FirstApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Book.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Die.h" />
     <ClInclude Include="error.h" />
+    <ClInclude Include="Movie.h" />
     <ClInclude Include="Person.h" />
+    <ClInclude Include="Product.h" />
     <ClInclude Include="std_lib_facilities.h" />
     <ClInclude Include="Temp.h" />
     <ClInclude Include="validation.h" />
