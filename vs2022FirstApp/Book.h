@@ -2,15 +2,15 @@
 #define MURACH_BOOK_H
 
 #include <string>
-#include "Product.h"
+#include "Media.h"
 
-class Book : public Product {
+class Book : public Media {
 private:
     std::string author;
 public:
     Book(std::string name = "", double price = 0.0,
-        int disc_pct = 0, std::string author_param = "") :
-        Product(name, price, disc_pct) {
+        int disc_pct = 0, std::string author_param = "", std::string format_param= "") :
+        Media(name, price, disc_pct, format_param) {
         author = author_param;
     }
 
@@ -21,8 +21,8 @@ public:
         return author;
     }
 
-    std::string get_description() const override {
-        return name + " by " + author;
+    std::string get_description() const{
+        return name + " by " + author + " -" + format;
     }
 };
 #endif // MURACH_BOOK_H

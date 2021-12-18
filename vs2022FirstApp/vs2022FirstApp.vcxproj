@@ -172,12 +172,14 @@
     <ClCompile Include="vs2022FirstApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Album.h" />
     <ClInclude Include="Book.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Die.h" />
     <ClInclude Include="error.h" />
+    <ClInclude Include="Media.h" />
     <ClInclude Include="Movie.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Product.h" />
