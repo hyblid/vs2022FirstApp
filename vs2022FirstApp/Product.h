@@ -12,7 +12,6 @@ private:
 public:
     Product(std::string name = "", double price = 0.0,
         int discount_pct = 0);
-
     void set_price(double);
     double get_price() const { return price; }
 
