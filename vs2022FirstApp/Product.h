@@ -12,6 +12,7 @@ private:
 public:
     Product(std::string name = "", double price = 0.0,
         int discount_pct = 0);
+
     void set_price(double);
     double get_price() const { return price; }
 
@@ -21,8 +22,7 @@ public:
     double get_discount_amount() const;
     double get_discount_price() const;
 
-    // virtual function - necessary for polymorphism
-    virtual std::string get_description() const;
+    // pure virtual function - necessary for polymorphism
+    virtual std::string get_description() const = 0;
 };
 #endif // MURACH_PRODUCT_H
-

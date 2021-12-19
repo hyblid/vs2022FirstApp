@@ -156,6 +156,7 @@
     <ClCompile Include="console.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Die.cpp" />
+    <ClCompile Include="Finance.cpp" />
     <ClCompile Include="food.cpp" />
     <ClCompile Include="helloWorld.ixx" />
     <ClCompile Include="myTools.cpp" />
@@ -179,12 +180,14 @@
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Die.h" />
     <ClInclude Include="error.h" />
+    <ClInclude Include="Finance.h" />
     <ClInclude Include="Media.h" />
     <ClInclude Include="Movie.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="std_lib_facilities.h" />
     <ClInclude Include="Temp.h" />
+    <ClInclude Include="UsedBook.h" />
     <ClInclude Include="validation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
