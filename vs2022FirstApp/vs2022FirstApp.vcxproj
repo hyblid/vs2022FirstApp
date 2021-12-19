@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="circle.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Die.cpp" />

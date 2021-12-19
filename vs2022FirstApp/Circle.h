@@ -1,37 +1,40 @@
-#ifndef HOWARD_CIRCLE_H
-#define HOWARD_CIRCLE_H
-#include <iostream>
+#ifndef MURACH_CIRCLE_H
+#define MURACH_CIRCLE_H
 
-using namespace std;
-class Circle {
+class Circle
+{
 private:
-    const double PI = 3.14;
-    double radius;
+	const double pi = 3.14159;
+	double radius;
 
 public:
-    Circle(double radius =0) {
-        this->radius = radius;
-    }
-    double get_radius() const {
-        return this->radius;
-    }
-    void set_radius(double r) {
-        this->radius = r;
-    }
+	// inline function definitions
+	Circle(double radius_param = 0.0) {
+		radius = radius_param;
+	}
 
-    double getDiameter() {
-        return 2 * radius;
-    }
+	double get_radius() const {
+		return radius;
+	}
 
-    double getCircumference() {
-        return getDiameter() * PI;
-    }
+	void set_radius(double radius_param) {
+		radius = radius_param;
+	}
 
-    double getArea() {
-        double area = PI * pow(radius, 2.0);
-        return round(area * 10) / 10;
-    }
+	// function declarations
+	double get_diameter() const;
+	double get_circumference() const;
+	double get_area() const;
+
+	// operator declarations
+	Circle operator+ (const Circle& right);
+	Circle operator- (const Circle& right);
+	//for Prefix
+	Circle& operator++ ();
+	//for PostFix
+	Circle& operator++ (int unused_param);
+	//for cout 
+	friend std::ostream& operator<< (std::ostream&, const Circle&);
 };
 
-
-#endif // MURACH_DIE_H
+#endif // MURACH_CIRCLE_H
