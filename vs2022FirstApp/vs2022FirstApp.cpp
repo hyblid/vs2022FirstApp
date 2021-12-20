@@ -1,48 +1,46 @@
 #include <iostream>
-#include <cmath>
-#include "Circle.h"
+#include <string>
+#include <algorithm>
+#include <numeric>
 
-using std::cout;
-using std::cin;
-using std::endl;
+using namespace std;
 
-void display(Circle circle) {
-	cout << "radius=" << circle.get_radius()
-		<< "|diameter=" << circle.get_diameter()
-		<< "|circumference=" << circle.get_circumference()
-		<< "|area=" << circle.get_area() << endl;
+void get_monthly_weight(string* months, double* weights, int num_months) {
+	if (!months || !weights) {
+		return;
+	}
+	for (int i = 0; i < num_months; i++)
+	{
+			cout << months[i] << ": ";
+			cin >> weights[i];
+	}
 }
 
-int main() {
-	// print name of program
-	cout << "Circle Tester" << endl << endl;
+double get_total(double* weights, int num_month) {
+	double total{ 0.0 };
+	for (int i = 0; i < num_month; i++)
+	{
+		total += weights[i];
+	}
+	return total;
+}
 
-	// create and display Circle object
-	Circle circle1(20);
-	cout << "CIRCLE 1:\n";
-	display(circle1);
-	cout << endl;
+int main()
+{
+	const int num_months = 12;
+	string months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+	//should define size before compile
+	double weights[12]{ 0 };
+	double total{ 0.0 };
+	double max{ 0.0 };
+	double min{ 0.0 };
 
-	Circle circle2(10);
-	cout << "CIRCLE 2:\n";
-	display(circle2);
-	cout << endl;
+	cout << "Welcome to the Weight Tracker program!\n\n"
+	  	<< "Please enter your weight at the beginning of each month:\n";
 
-	// test the addition and subtraction operators
-	cout << "CIRCLE 3 (CIRCLE 1 + CIRCLE 2):\n";
-	display(circle1 + circle2);
-	cout << endl;
-	cout << "CIRCLE 4 (CIRCLE 1 - CIRCLE 2):\n";
-	display(circle1 - circle2);
-	cout << endl;
-	cout << "CIRCLE 4 Prefix++\n";
-	//Circle circle3 = circle1 - circle2;
-	display(++(circle1 - circle2));
-	cout << endl;
-	cout << "CIRCLE 4 Postfix++\n";
-	//Circle circle3 = circle1 - circle2;
-	display((circle1 - circle2)++);
-	cout << endl;
-
-	// test the increment operator
+	get_monthly_weight(months, weights, num_months);
+	total = get_total(weights, num_months);
+	cout << "Maximum weight: " << *std::max_element(weights, weights + num_months) << endl;
+	cout << "Minimum weight: " << *std::min_element(weights, weights + num_months) << endl;
+	cout << "Average weight : " << std::accumulate(weights, weights + num_months,0) / num_months << endl;
 }
