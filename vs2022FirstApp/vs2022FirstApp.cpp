@@ -1,48 +1,33 @@
-#include <iostream>
-#include <cmath>
-#include "Circle.h"
+#include<iostream>
+#include <algorithm>
+#include <numeric>
+#include "HeapArray.h"
 
-using std::cout;
-using std::cin;
-using std::endl;
+using namespace std;
 
-void display(Circle circle) {
-	cout << "radius=" << circle.get_radius()
-		<< "|diameter=" << circle.get_diameter()
-		<< "|circumference=" << circle.get_circumference()
-		<< "|area=" << circle.get_area() << endl;
-}
+HeapArray get_weekly_steps(HeapArray steps, char* days, int num_days);
 
 int main() {
-	// print name of program
-	cout << "Circle Tester" << endl << endl;
+    const int num_days = 7;
+    char days[] = "MTWTFSS";
+    HeapArray steps(num_days);
 
-	// create and display Circle object
-	Circle circle1(20);
-	cout << "CIRCLE 1:\n";
-	display(circle1);
-	cout << endl;
+    cout << "Welcome to the Weekly Step Counter program!\n\n"
+        << "Please enter your steps for the week:\n";
 
-	Circle circle2(10);
-	cout << "CIRCLE 2:\n";
-	display(circle2);
-	cout << endl;
+    steps = get_weekly_steps(steps, days, num_days);
+    double total = accumulate(steps.begin(), steps.end(), 0);
+    double avg = total / num_days;
 
-	// test the addition and subtraction operators
-	cout << "CIRCLE 3 (CIRCLE 1 + CIRCLE 2):\n";
-	display(circle1 + circle2);
-	cout << endl;
-	cout << "CIRCLE 4 (CIRCLE 1 - CIRCLE 2):\n";
-	display(circle1 - circle2);
-	cout << endl;
-	cout << "CIRCLE 4 Prefix++\n";
-	//Circle circle3 = circle1 - circle2;
-	display(++(circle1 - circle2));
-	cout << endl;
-	cout << "CIRCLE 4 Postfix++\n";
-	//Circle circle3 = circle1 - circle2;
-	display((circle1 - circle2)++);
-	cout << endl;
+    cout << "Total steps for the week:  " << total << '\n'
+        << "Average daily steps:       " << avg << "\n\n";
+}
 
-	// test the increment operator
+HeapArray get_weekly_steps(HeapArray steps, char* days, int num_days) {
+    for (int i = 0; i < num_days; ++i) {
+        cout << days[i] << ": ";
+        cin >> steps[i];
+    }
+    std::cout << '\n';
+    return steps;
 }
