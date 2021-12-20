@@ -1,46 +1,33 @@
-#include <iostream>
-#include <string>
+#include<iostream>
 #include <algorithm>
 #include <numeric>
+#include "HeapArray.h"
 
 using namespace std;
 
-void get_monthly_weight(string* months, double* weights, int num_months) {
-	if (!months || !weights) {
-		return;
-	}
-	for (int i = 0; i < num_months; i++)
-	{
-			cout << months[i] << ": ";
-			cin >> weights[i];
-	}
+HeapArray get_weekly_steps(HeapArray steps, char* days, int num_days);
+
+int main() {
+    const int num_days = 7;
+    char days[] = "MTWTFSS";
+    HeapArray steps(num_days);
+
+    cout << "Welcome to the Weekly Step Counter program!\n\n"
+        << "Please enter your steps for the week:\n";
+
+    steps = get_weekly_steps(steps, days, num_days);
+    double total = accumulate(steps.begin(), steps.end(), 0);
+    double avg = total / num_days;
+
+    cout << "Total steps for the week:  " << total << '\n'
+        << "Average daily steps:       " << avg << "\n\n";
 }
 
-double get_total(double* weights, int num_month) {
-	double total{ 0.0 };
-	for (int i = 0; i < num_month; i++)
-	{
-		total += weights[i];
-	}
-	return total;
-}
-
-int main()
-{
-	const int num_months = 12;
-	string months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-	//should define size before compile
-	double weights[12]{ 0 };
-	double total{ 0.0 };
-	double max{ 0.0 };
-	double min{ 0.0 };
-
-	cout << "Welcome to the Weight Tracker program!\n\n"
-	  	<< "Please enter your weight at the beginning of each month:\n";
-
-	get_monthly_weight(months, weights, num_months);
-	total = get_total(weights, num_months);
-	cout << "Maximum weight: " << *std::max_element(weights, weights + num_months) << endl;
-	cout << "Minimum weight: " << *std::min_element(weights, weights + num_months) << endl;
-	cout << "Average weight : " << std::accumulate(weights, weights + num_months,0) / num_months << endl;
+HeapArray get_weekly_steps(HeapArray steps, char* days, int num_days) {
+    for (int i = 0; i < num_days; ++i) {
+        cout << days[i] << ": ";
+        cin >> steps[i];
+    }
+    std::cout << '\n';
+    return steps;
 }

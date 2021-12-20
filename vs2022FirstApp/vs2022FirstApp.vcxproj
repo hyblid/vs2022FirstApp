@@ -159,6 +159,7 @@
     <ClCompile Include="Die.cpp" />
     <ClCompile Include="Finance.cpp" />
     <ClCompile Include="food.cpp" />
+    <ClCompile Include="HeapArray.cpp" />
     <ClCompile Include="helloWorld.ixx" />
     <ClCompile Include="myTools.cpp" />
     <ClCompile Include="Person.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Die.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="Finance.h" />
+    <ClInclude Include="HeapArray.h" />
     <ClInclude Include="Media.h" />
     <ClInclude Include="Movie.h" />
     <ClInclude Include="Person.h" />
