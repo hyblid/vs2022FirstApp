@@ -45,9 +45,6 @@
     <ClCompile Include="String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sort.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="food.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,9 +70,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="circle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HeapArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

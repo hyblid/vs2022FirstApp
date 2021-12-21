@@ -1,40 +1,44 @@
 #include <iostream>
-#include "sort.cpp"
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+#include <numeric>
+#include "HeapArray.h"
 
 using namespace std;
 
+void load_sensor_data(HeapArray<int>& data);
 
-int main()
-{
-	SORT s;
-	const int size = 5;
-	int temps[size] = { 75, 64, 92, 88, 57 };
-	cout << "Temperatures: ";
-	for (int temp : temps) {
-		cout << temp << ' ';
-	}
-	cout << endl;
+int main() {
+    cout << "The Sensor Analysis program\n\n";
 
-	s.bubble_sort(temps, size);
-	cout << "Sorted temperatures: ";
-	for (int temp : temps) {
-		cout << temp << ' ';
-	}
-	cout << endl << endl;
+    int num_days;
+    cout << "Enter the number of days you'd like to analyze: ";
+    cin >> num_days;
+    cout << endl;
 
-	double prices[size] = { 18.99, 9.99, 12.99, 24.99, 15.99 };
-	cout << "Prices: ";
-	for (double price : prices) {
-		cout << price << ' ';
-	}
-	cout << endl;
-	// code to sort and print array
-	s.bubble_sort(prices, size);
-	cout << "Prices: ";
-	for (double price : prices) {
-		cout << price << ' ';
-	}
-	return 0;
+    const int seconds_per_day = 86400;
+    int total_seconds = num_days * seconds_per_day;
+    HeapArray<int> data(total_seconds);
+    load_sensor_data(data);
+
+    double total = accumulate(data.begin(), data.end(), 0);
+    auto min = min_element(data.begin(), data.end());
+    auto max = max_element(data.begin(), data.end());
+
+    cout << "Number of sensor readings over " << num_days
+        << " days: " << data.size() << endl;
+    cout << "Average reading: " << (total / data.size()) << endl;
+    cout << "Lowest reading: " << *min << " first found at " << data.linear_search (*max) << " seconds" << endl;
+    cout << "Highest reading: " << *max << " first found at " << data.linear_search(*min) << " seconds" << endl << endl;
 }
 
-
+void load_sensor_data(HeapArray<int>& data) { // simulate sensor data
+    srand(time(nullptr));                     // seed random number
+    int num, adjust;
+    adjust = rand() % 70 + 10;                // generate number between 10 - 70
+    for (int i = 0; i < data.size(); ++i) {
+        num = rand() % 100 + 1;               // generate number between 1 - 100
+        data[i] = (num < adjust) ? num + adjust : num;  // adjust number
+    }
+}

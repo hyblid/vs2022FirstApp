@@ -159,7 +159,6 @@
     <ClCompile Include="Die.cpp" />
     <ClCompile Include="Finance.cpp" />
     <ClCompile Include="food.cpp" />
-    <ClCompile Include="HeapArray.cpp" />
     <ClCompile Include="helloWorld.ixx" />
     <ClCompile Include="myTools.cpp" />
     <ClCompile Include="Person.cpp" />
@@ -167,7 +166,6 @@
     <ClCompile Include="printHelloWorld.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="Sample.cpp" />
-    <ClCompile Include="sort.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="validation.cpp" />
     <ClCompile Include="Vector.ixx" />
