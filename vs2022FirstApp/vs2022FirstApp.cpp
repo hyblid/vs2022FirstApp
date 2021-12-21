@@ -1,44 +1,50 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
-#include <numeric>
 #include "HeapArray.h"
 
 using namespace std;
 
-void load_sensor_data(HeapArray<int>& data);
+template<typename T>
+void display_array(HeapArray<T>& arr, int size);
 
-int main() {
-    cout << "The Sensor Analysis program\n\n";
+template<typename T>
+int linear_search(HeapArray<T>& arr, int counter, T value_to_find);
 
-    int num_days;
-    cout << "Enter the number of days you'd like to analyze: ";
-    cin >> num_days;
-    cout << endl;
+int main()
+{
+	const int size = 6;
+	HeapArray<int> numbers(size);
+	//int numbers[size] = { 0 };
+	for (int i = 0; i < size; ++i) {
+		numbers[i] = (i+1) * 10;
+	}
+	int index = linear_search(numbers, size, 40);
+	cout << "Numbers array: ";
+	display_array(numbers, size);
+	cout << "\nThe number 40 was found at index " << index << "\n\n";
 
-    const int seconds_per_day = 86400;
-    int total_seconds = num_days * seconds_per_day;
-    HeapArray<int> data(total_seconds);
-    load_sensor_data(data);
-
-    double total = accumulate(data.begin(), data.end(), 0);
-    auto min = min_element(data.begin(), data.end());
-    auto max = max_element(data.begin(), data.end());
-
-    cout << "Number of sensor readings over " << num_days
-        << " days: " << data.size() << endl;
-    cout << "Average reading: " << (total / data.size()) << endl;
-    cout << "Lowest reading: " << *min << " first found at " << data.linear_search (*max) << " seconds" << endl;
-    cout << "Highest reading: " << *max << " first found at " << data.linear_search(*min) << " seconds" << endl << endl;
+	HeapArray<double> prices(6);
+	for (int i = 0; i < size; ++i) {
+		prices[i] = (i+1) + .99;
+	}
+	index = linear_search(prices, size, 1.99);
+	cout << "Prices array: ";
+	display_array(prices, size);
+	cout << "\nThe price 1.99 was found at index " << index << "\n\n";
 }
 
-void load_sensor_data(HeapArray<int>& data) { // simulate sensor data
-    srand(time(nullptr));                     // seed random number
-    int num, adjust;
-    adjust = rand() % 70 + 10;                // generate number between 10 - 70
-    for (int i = 0; i < data.size(); ++i) {
-        num = rand() % 100 + 1;               // generate number between 1 - 100
-        data[i] = (num < adjust) ? num + adjust : num;  // adjust number
-    }
+template<typename T>
+void display_array(HeapArray<T>& arr, int size) {
+	for (int i = 0; i < size; ++i) {
+		cout << arr[i] << ' ';
+	}
+}
+
+template<typename T>
+int linear_search(HeapArray<T>& arr, int counter, T value_to_find) {
+	for (int i = 0; i < counter; ++i) {
+		if (arr[i] == value_to_find) {
+			return i;  // value found - return index
+		}
+	}
+	return -1;         // value not found - return -1
 }
