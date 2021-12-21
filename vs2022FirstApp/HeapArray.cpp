@@ -32,9 +32,7 @@ HeapArray& HeapArray::operator=  (const HeapArray& tocopy) {
     }
 
     delete[] arr;
-
     arr = new_arr;
-
     return *this;
 }
 
