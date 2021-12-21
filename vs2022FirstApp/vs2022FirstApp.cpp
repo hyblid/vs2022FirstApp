@@ -1,33 +1,40 @@
-#include<iostream>
-#include <algorithm>
-#include <numeric>
-#include "HeapArray.h"
+#include <iostream>
+#include "sort.cpp"
 
 using namespace std;
 
-HeapArray get_weekly_steps(HeapArray steps, char* days, int num_days);
 
-int main() {
-    const int num_days = 7;
-    char days[] = "MTWTFSS";
-    HeapArray steps(num_days);
+int main()
+{
+	SORT s;
+	const int size = 5;
+	int temps[size] = { 75, 64, 92, 88, 57 };
+	cout << "Temperatures: ";
+	for (int temp : temps) {
+		cout << temp << ' ';
+	}
+	cout << endl;
 
-    cout << "Welcome to the Weekly Step Counter program!\n\n"
-        << "Please enter your steps for the week:\n";
+	s.bubble_sort(temps, size);
+	cout << "Sorted temperatures: ";
+	for (int temp : temps) {
+		cout << temp << ' ';
+	}
+	cout << endl << endl;
 
-    steps = get_weekly_steps(steps, days, num_days);
-    double total = accumulate(steps.begin(), steps.end(), 0);
-    double avg = total / num_days;
-
-    cout << "Total steps for the week:  " << total << '\n'
-        << "Average daily steps:       " << avg << "\n\n";
+	double prices[size] = { 18.99, 9.99, 12.99, 24.99, 15.99 };
+	cout << "Prices: ";
+	for (double price : prices) {
+		cout << price << ' ';
+	}
+	cout << endl;
+	// code to sort and print array
+	s.bubble_sort(prices, size);
+	cout << "Prices: ";
+	for (double price : prices) {
+		cout << price << ' ';
+	}
+	return 0;
 }
 
-HeapArray get_weekly_steps(HeapArray steps, char* days, int num_days) {
-    for (int i = 0; i < num_days; ++i) {
-        cout << days[i] << ": ";
-        cin >> steps[i];
-    }
-    std::cout << '\n';
-    return steps;
-}
+
