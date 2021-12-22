@@ -182,8 +182,11 @@
     <ClInclude Include="error.h" />
     <ClInclude Include="Finance.h" />
     <ClInclude Include="HeapArray.h" />
+    <ClInclude Include="Link.h" />
     <ClInclude Include="Media.h" />
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="MyIterator.h" />
+    <ClInclude Include="MyList.h" />
     <ClInclude Include="MyVector.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Product.h" />
