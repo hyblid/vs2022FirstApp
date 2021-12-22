@@ -52,6 +52,16 @@
         return choice;
     }
 
+    //for string with space
+    std::string Console::get_string(std::string prompt)
+    {
+        std::string result;
+        std::cout << prompt;
+        discard_remaining_chars();
+        getline(std::cin, result);
+        return std::string();
+    }
+
     // define helper functions
     void discard_remaining_chars() {
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
