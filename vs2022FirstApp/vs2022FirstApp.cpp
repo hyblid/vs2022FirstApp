@@ -1,50 +1,40 @@
 #include <iostream>
-#include "HeapArray.h"
+#include <string>
+#include <algorithm>
+#include "MyVector.h"
 
 using namespace std;
 
 template<typename T>
-void display_array(HeapArray<T>& arr, int size);
-
-template<typename T>
-int linear_search(HeapArray<T>& arr, int counter, T value_to_find);
-
-int main()
-{
-	const int size = 6;
-	HeapArray<int> numbers(size);
-	//int numbers[size] = { 0 };
-	for (int i = 0; i < size; ++i) {
-		numbers[i] = (i+1) * 10;
-	}
-	int index = linear_search(numbers, size, 40);
-	cout << "Numbers array: ";
-	display_array(numbers, size);
-	cout << "\nThe number 40 was found at index " << index << "\n\n";
-
-	HeapArray<double> prices(6);
-	for (int i = 0; i < size; ++i) {
-		prices[i] = (i+1) + .99;
-	}
-	index = linear_search(prices, size, 1.99);
-	cout << "Prices array: ";
-	display_array(prices, size);
-	cout << "\nThe price 1.99 was found at index " << index << "\n\n";
+void display(MyVector<T> elements) {   // test copy constructor
+    for (T elem : elements) {
+        cout << elem << '|';
+    }
+    cout << endl;
 }
 
-template<typename T>
-void display_array(HeapArray<T>& arr, int size) {
-	for (int i = 0; i < size; ++i) {
-		cout << arr[i] << ' ';
-	}
-}
+int main() {
+    cout << "TESTING\n";
 
-template<typename T>
-int linear_search(HeapArray<T>& arr, int counter, T value_to_find) {
-	for (int i = 0; i < counter; ++i) {
-		if (arr[i] == value_to_find) {
-			return i;  // value found - return index
-		}
-	}
-	return -1;         // value not found - return -1
+    // test initialization list constructor
+    MyVector<string> tasks{ "Go to store", "Feed cats", "Check email" };
+    cout << "Init:        ";
+    display(tasks);                 // test copy constructor
+    cout << "capacity():  " << tasks.capacity() << endl;
+
+    // test push_back() function
+    cout << "push_back(): ";
+    tasks.push_back("Brush teeth");
+    display(tasks);                 // test copy constructor
+    cout << "capacity():  " << tasks.capacity() << endl;
+    cout << "size():      " << tasks.size() << endl;
+
+    // test at() function
+    cout << "at(0):       " << tasks.at(0) << endl;
+    cout << "at(size-1):  " << tasks.at(tasks.size() - 1) << endl;
+    // test resize() function
+    cout << "resize(20)\n";
+    tasks.resize(20);
+    cout << "capacity():  " << tasks.capacity() << endl;
+    cout << "size():      " << tasks.size() << endl;
 }

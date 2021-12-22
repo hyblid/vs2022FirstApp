@@ -184,6 +184,7 @@
     <ClInclude Include="HeapArray.h" />
     <ClInclude Include="Media.h" />
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="MyVector.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="std_lib_facilities.h" />

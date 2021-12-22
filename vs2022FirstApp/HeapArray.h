@@ -8,7 +8,7 @@ private:
     T* arr;
 
 public:
-    // declarations
+    // declarations (CAUTION for constructor and destructor's EXTERNAL LINK ERROR)
     HeapArray(const int);                   // constructor
     HeapArray(const HeapArray& tocopy);     // copy constructor
     HeapArray(HeapArray&& tomove);          // move constructor
@@ -94,6 +94,4 @@ int HeapArray<T>::linear_search(T value_to_find) {
     int t1 = time(NULL);
     return t1- t0;
 }
-
-
 #endif // MURACH_HEAP_ARRAY_H
