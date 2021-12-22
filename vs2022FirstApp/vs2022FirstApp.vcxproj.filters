@@ -128,5 +128,14 @@
     <ClInclude Include="MyVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Link.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
