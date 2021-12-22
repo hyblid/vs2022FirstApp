@@ -1,62 +1,72 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include "MyVector.h"      // NEW
-#include <algorithm>
-#include <numeric>
-#include "find_midpoint.h" // NEW
-#include "calc_median.h"
+#include <stdlib.h>
+#include <string>
+#include <iomanip>
 
 using namespace std;
 
-void display_int(int num) {
-    cout << num << ' ';
+const int STRAVG = 30;
+
+void exhausted()
+{
+	cout << "Exhausted the free store." << endl;
 }
 
-int main() {
-    cout << "The Number Cruncher program\n\n";
+void main()
+{
+	int** class_grades = 0;
+	char** student_names = 0;
+	string name;
+	int num_students = 0;
+	int num_tests = 0;
+	int i = 0, j = 0;
 
-    // create an empty vector for a specified number of elements
-    MyVector<int> numbers;
-    numbers.reserve(12);
+	set_new_handler(exhausted);
 
-    // fill the vector with random numbers
-    srand(time(nullptr));
-    for (int i = 0; i < numbers.capacity(); ++i) {
-        int number = rand() % 30;
-        numbers.push_back(number);
-    }
+	cout << "Enter the number of students in your class: ";
+	cin >> num_students;
+	cout << "Enter the number of tests you gave this semester: ";
+	cin >> num_tests;
+	cout << endl;
 
-    // use STL algorithms
-    cout << numbers.size() << " RANDOM NUMBERS: ";
-    for_each(numbers.begin(), numbers.end(), display_int);
-    cout << endl;
+	if (!num_students || !num_tests)
+	{
+		cout << "You entered 0 for one of the fields. Goodbye.\n";
+		exit(0);
+	}
 
-    sort(numbers.begin(), numbers.end());
-    cout << numbers.size() << " SORTED NUMBERS: ";
-    for_each(numbers.begin(), numbers.end(), display_int);
-    cout << endl;
+	// allocate the space for ppbufs
+	student_names = new char* [num_students + 1];
+	class_grades = new int* [num_students + 1];
 
-    int sum = accumulate(numbers.begin(), numbers.end(), 0);
-    cout << "Sum = " << sum << ' ' << endl;
+	for (i = 0; i < num_students;i++)
+	{
+		cout << "Enter name of student " << i << ": ";
+		cin.ignore(100, '\n');
+		getline(cin, name);
+		student_names[i] = new char[name.length() + 1];
+		strcpy(student_names[i], name.c_str());
+		// allocate space for the 1d int array
+		class_grades[i] = new int[num_tests];
 
-    auto avg = sum / numbers.size();
-    cout << "Average = " << avg << '\n' << endl;
-    ;
+		for (j = 0; j < num_tests; j++)
+		{
 
-    auto min_iter = min_element(numbers.begin(), numbers.end());
-    cout << "Min = " << *min_iter << ' ' << endl;
-    ;
+			cout << "Enter the students grade for test " << j << ": ";
+			cin >> class_grades[i][j];
+		}
+	}
+	cout << endl;
 
-    auto max_iter = max_element(numbers.begin(), numbers.end());
-    cout << "Max = " << *max_iter << '\n' << endl;
-
-
-    // use custom algorithm
-    auto mid_iter = find_midpoint(numbers.begin(), numbers.end());   // NEW
-    cout << "Midpoint = " << *mid_iter << ' ' << endl;
-
-    // calculate median
-    double median = calc_median(numbers.begin(), numbers.end());
-    cout << "Median = " << median << "\n\n";
+	/* print out what we stored. See Exercise 1 to expand
+	upon this program.  We will print out the information
+	differently than we received it. */
+	for (i = 0; i < num_tests; i++)
+	{
+		cout << "On test #" << i << "..." << endl;
+		for (j = 0; j < num_students; j++)
+			cout << "\t" << student_names[j]
+			<< " scored " << class_grades[j][i] << endl;
+	}
 }
+

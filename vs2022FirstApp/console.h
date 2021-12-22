@@ -3,6 +3,7 @@
 
 #include <string>
 #include <limits>
+#include <string>
 
 class Console {
     // declare general-purpose functions
@@ -15,5 +16,6 @@ public:
         int max = std::numeric_limits<int>::max());
     static char get_char(std::string prompt,
         bool add_blank_line = true);
+    static std::string get_string(std::string prompt);
 };
 #endif // MURACH_CONSOLE_H
