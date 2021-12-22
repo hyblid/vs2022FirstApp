@@ -175,12 +175,14 @@
   <ItemGroup>
     <ClInclude Include="Album.h" />
     <ClInclude Include="Book.h" />
+    <ClInclude Include="calc_median.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Die.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="Finance.h" />
+    <ClInclude Include="find_midpoint.h" />
     <ClInclude Include="HeapArray.h" />
     <ClInclude Include="Link.h" />
     <ClInclude Include="Media.h" />

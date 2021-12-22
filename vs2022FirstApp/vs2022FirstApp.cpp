@@ -1,45 +1,62 @@
 #include <iostream>
-#include <string>
-#include "MyList.h"
+#include <cstdlib>
+#include <ctime>
+#include "MyVector.h"      // NEW
+#include <algorithm>
+#include <numeric>
+#include "find_midpoint.h" // NEW
+#include "calc_median.h"
 
 using namespace std;
 
-template<typename T>
-void display(MyList<T>& elements) {   // don't test copy constructor
-    for (T elem : elements) {
-        cout << elem << '|';
-    }
-    cout << endl;
+void display_int(int num) {
+    cout << num << ' ';
 }
 
 int main() {
-    // test push_back() function
-    cout << "TESTING\n";
-    MyList<string> tasks;
-    tasks.push_back("Go to store");
-    tasks.push_back("Feed cats");
-    tasks.push_back("Check email");
-    tasks.push_back("Feed cats");
-    tasks.push_back("Brush teeth");
-    display(tasks);
+    cout << "The Number Cruncher program\n\n";
 
-    // test size() function
-    cout << "size():     " << tasks.size() << endl;
+    // create an empty vector for a specified number of elements
+    MyVector<int> numbers;
+    numbers.reserve(12);
 
-    // test pop_back() function
-    cout << "pop_back(): ";
-    tasks.pop_back();
-    display(tasks);
+    // fill the vector with random numbers
+    srand(time(nullptr));
+    for (int i = 0; i < numbers.capacity(); ++i) {
+        int number = rand() % 30;
+        numbers.push_back(number);
+    }
 
-    // test at() function
-    cout << "at(0):      " << tasks.at(0) <<  endl;
-    cout << "at(size-1): " << tasks.at(tasks.size()-1) << endl;
+    // use STL algorithms
+    cout << numbers.size() << " RANDOM NUMBERS: ";
+    for_each(numbers.begin(), numbers.end(), display_int);
+    cout << endl;
 
-    // test remove() function
-    cout << "remove(tasks.size()-1):   ";
-    tasks.remove("Feed cats");
-    display(tasks);
+    sort(numbers.begin(), numbers.end());
+    cout << numbers.size() << " SORTED NUMBERS: ";
+    for_each(numbers.begin(), numbers.end(), display_int);
+    cout << endl;
 
-    // test size() function
-    cout << "size():     " << tasks.size() << endl;
+    int sum = accumulate(numbers.begin(), numbers.end(), 0);
+    cout << "Sum = " << sum << ' ' << endl;
+
+    auto avg = sum / numbers.size();
+    cout << "Average = " << avg << '\n' << endl;
+    ;
+
+    auto min_iter = min_element(numbers.begin(), numbers.end());
+    cout << "Min = " << *min_iter << ' ' << endl;
+    ;
+
+    auto max_iter = max_element(numbers.begin(), numbers.end());
+    cout << "Max = " << *max_iter << '\n' << endl;
+
+
+    // use custom algorithm
+    auto mid_iter = find_midpoint(numbers.begin(), numbers.end());   // NEW
+    cout << "Midpoint = " << *mid_iter << ' ' << endl;
+
+    // calculate median
+    double median = calc_median(numbers.begin(), numbers.end());
+    cout << "Median = " << median << "\n\n";
 }
