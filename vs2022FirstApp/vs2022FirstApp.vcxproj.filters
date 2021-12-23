@@ -143,5 +143,11 @@
     <ClInclude Include="calc_median.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PPbuf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dynstrlb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

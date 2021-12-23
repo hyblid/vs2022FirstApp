@@ -1,72 +1,220 @@
+// dissect.cpp
 #include <iostream>
-#include <stdlib.h>
 #include <string>
-#include <iomanip>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 using namespace std;
-
-const int STRAVG = 30;
 
 void exhausted()
 {
 	cout << "Exhausted the free store." << endl;
+	exit(0);
 }
 
+// strdup will allocate a copy of the input string.
+char* strdup(char* instr)
+{
+	char* outstr = 0;
+
+	if (!instr)
+	{
+		cerr << "strdup: FATAL - NULL argument!" << endl;
+		return(0);
+	}
+
+	outstr = new char[strlen(instr) + 1];
+	strcpy(outstr, instr);
+
+	return(outstr);
+}
+
+/* ***********************************************************
+	 FUNCTION NAME:  file2ppbuf
+	 PURPOSE:  read a text file into a character pointer pointer buffer.
+	 INPUT:  filename - a character string of the file to open.
+	 OUTPUT:  a character pointer pointer which points to the
+			  null-terminated ppbuf.
+	 NOTE: this function allocates memory.
+	 AUTHOR: MCD
+	************************************************************ */
+char** file2ppbuf(char* filename)
+{
+	FILE* fp;
+
+	char str[512];
+	char** buf = 0;
+	char** tmp = 0;
+
+	int linechunk = 100;
+	int cnt = 0, len = 0;
+
+	if (!filename)
+	{
+		cerr << "file2ppbuf:FATAL - filename is NULL!" << endl;
+		return(0);
+	}
+
+	if ((fp = fopen(filename, "r")) == 0)
+	{
+		cerr << "file2ppbuf: FATAL - cannot open " << filename
+			<< endl;
+		return(0);
+	}
+
+	buf = new char* [linechunk];
+	cnt = 0;
+	while (!feof(fp))
+	{
+		if (fgets(str, 500, fp))
+		{
+			len = strlen(str);
+			buf[cnt] = new char[len + 1];
+			strcpy(buf[cnt], str);
+			cnt++;
+			if (cnt >= linechunk)
+			{
+				/* reallocate in quantities of 100 */
+				tmp = new char* [linechunk + 100];
+				memcpy(tmp, buf, sizeof(char*) * cnt);
+				delete buf;
+				buf = tmp;
+				linechunk += 100;
+			}
+		}
+	}
+
+	buf[cnt] = 0;
+
+	fclose(fp);
+	return(buf);
+}
+
+/* ***********************************************************
+	 FUNCTION NAME:  delete_ppbuf
+	 PURPOSE:  delete each string and the array of pointers that
+			   make up a ppbuf.
+	 INPUT:  inbuf - a character pointer pointer buffer to be freed.
+			count - the number of lines in the ppbuf.  If 0 it will
+					expect the ppbuf to be null-terminated.
+	 OUTPUT:  none.
+	 AUTHOR: MCD
+	************************************************************ */
+void delete_ppbuf(char** inbuf, int count)
+{
+	int i;
+
+	if (inbuf)
+	{
+		if (count > 0)
+		{
+			for (i = 0; i < count; i++)
+				delete inbuf[i];
+			delete inbuf;
+		}
+		else
+		{
+			for (i = 0; inbuf[i]; i++)
+				delete inbuf[i];
+			delete inbuf;
+		}
+	}
+}
+
+
+/* ***********************************************************
+	 FUNCTION NAME:  main for dissect.cpp
+	 PURPOSE:  read in any C source file and count the number
+			   of words, statements, blocks and comments in
+			   the source file.
+	 INPUT:  none.
+	 OUTPUT:  none.
+	 AUTHOR: MCD
+	************************************************************ */
 void main()
 {
-	int** class_grades = 0;
-	char** student_names = 0;
-	string name;
-	int num_students = 0;
-	int num_tests = 0;
+	char source[80];
+	char* dot = 0;
+	char** src_ppbuf = 0;
+	char last_char = '~';
+
 	int i = 0, j = 0;
+	int words = 0, statements = 0, blocks = 0, comments = 0;
 
-	set_new_handler(exhausted);
+	short int alnum = 0;
 
-	cout << "Enter the number of students in your class: ";
-	cin >> num_students;
-	cout << "Enter the number of tests you gave this semester: ";
-	cin >> num_tests;
-	cout << endl;
-
-	if (!num_students || !num_tests)
+	cout << "Source file to dissect? ";
+	cin >> source;
+	if (!(strlen(source)))
 	{
-		cout << "You entered 0 for one of the fields. Goodbye.\n";
+		cerr << "dissect: FATAL - No file to dissect!"
+			<< endl;
 		exit(0);
 	}
 
-	// allocate the space for ppbufs
-	student_names = new char* [num_students + 1];
-	class_grades = new int* [num_students + 1];
-
-	for (i = 0; i < num_students;i++)
+	dot = strrchr(source, '.');
+	if (!dot || strcmp(dot, ".cpp"))
 	{
-		cout << "Enter name of student " << i << ": ";
-		cin.ignore(100, '\n');
-		getline(cin, name);
-		student_names[i] = new char[name.length() + 1];
-		strcpy(student_names[i], name.c_str());
-		// allocate space for the 1d int array
-		class_grades[i] = new int[num_tests];
+		cerr << "dissect: FATAL - source file must end in .cpp!"
+			<< endl;
+		exit(0);
+	}
 
-		for (j = 0; j < num_tests; j++)
+	src_ppbuf = file2ppbuf(source);
+	if (!src_ppbuf)
+	{
+		cerr << "dissect: FATAL - file2ppbuf failed!" << endl;
+		exit(0);
+	}
+
+	cout << "Dissecting ... ";
+	cout.flush();
+	/* go through all the lines in the file */
+	for (i = 0; src_ppbuf[i]; i++)
+	{
+		for (j = 0; src_ppbuf[i][j]; j++)
 		{
+			if (isalnum(src_ppbuf[i][j]))
+				alnum = 1;
+			else if (isspace(src_ppbuf[i][j]))
+			{
+				if (alnum)
+				{
+					words++;
+					alnum = 0;
+				}
+			}
+			else if (ispunct(src_ppbuf[i][j]))
+			{
+				switch (src_ppbuf[i][j]) {
+				case ';':
+					statements++;
+					break;
+				case '{':
+					blocks++;
+					break;
+				case '*':
+					if (last_char == '/')
+						comments++;
+					break;
+				case '/':
+					if (last_char == '/')
+						comments++;
+					break;
+				} /* end of switch */
+			} /* end of if */
+			last_char = src_ppbuf[i][j];
+		} /* end of for all chars on line */
+	} /* end of for all lines */
 
-			cout << "Enter the students grade for test " << j << ": ";
-			cin >> class_grades[i][j];
-		}
-	}
-	cout << endl;
+	cout << "Done." << endl;
 
-	/* print out what we stored. See Exercise 1 to expand
-	upon this program.  We will print out the information
-	differently than we received it. */
-	for (i = 0; i < num_tests; i++)
-	{
-		cout << "On test #" << i << "..." << endl;
-		for (j = 0; j < num_students; j++)
-			cout << "\t" << student_names[j]
-			<< " scored " << class_grades[j][i] << endl;
-	}
+	cout << "+---------- " << source << " ----------+" << endl;
+	cout << "Number of words      : " << words << endl;
+	cout << "Number of statements : " << statements << endl;
+	cout << "Number of blocks     : " << blocks << endl;
+	cout << "Number of comments   : " << comments << endl;
+	cout << "+--------------------------------------+" << endl;
+
+	delete_ppbuf(src_ppbuf, 0);
 }
-
