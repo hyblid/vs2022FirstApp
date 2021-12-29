@@ -1,16 +1,17 @@
 #include <iostream>
+#include <cmath>
 
-void add(int a, int b) {
+void absDiff(int a) {
 	int sum = 0;
-	sum = (a == b) ? (a + b) * 3 : (a + b);
-	std::cout << sum << std::endl;
+	sum = (a > 51) ? abs(51 - a) * 3 : abs(51 - a);
+	std::cout << "Sum: " << sum << std::endl;
 }
 
 int main()
 {
-	add(1, 2);
-	add(3, 2);
-	add(2, 2);
+	absDiff(53);
+	absDiff(30);
+	absDiff(51);
 	return 0;
 }
 
